@@ -1,0 +1,14 @@
+{
+  "name": "job-search-toolkit-marketplace",
+  "description": "Marketplace for the AI Job Search Toolkit plugin.",
+  "owner": {
+    "name": "lcnorder"
+  },
+  "plugins": [
+    {
+      "name": "job-search-toolkit",
+      "source": ".",
+      "description": "AI-powered job application framework: evaluate postings, tailor CVs and cover letters, scrape job boards, and prep for interviews."
+    }
+  ]
+}

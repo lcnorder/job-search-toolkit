@@ -1,0 +1,1 @@
+../.claude/agents/posting-scorer.md

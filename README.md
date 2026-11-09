@@ -3,15 +3,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ai-job-search-dev/ai-job-search/actions/workflows/ci.yml"><img src="https://github.com/ai-job-search-dev/ai-job-search/actions/workflows/ci.yml/badge.svg" alt="CI" height="20"></a>
+  <a href="https://github.com/lcnorder/job-search-toolkit/actions/workflows/ci.yml"><img src="https://github.com/lcnorder/job-search-toolkit/actions/workflows/ci.yml/badge.svg" alt="CI" height="20"></a>
   &nbsp;
   <a href="https://claude.com/claude-code"><img src="https://img.shields.io/badge/built_on-Claude_Code-2A9D8F?style=flat" alt="Built on Claude Code" height="20"></a>
   &nbsp;
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2A9D8F?style=flat" alt="MIT license" height="20"></a>
-</p>
-
-<p align="center">
-  <a href="https://trendshift.io/repositories/43622?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-43622" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/43622/daily" alt="MadsLorentzen%2Fai-job-search | Trendshift" width="250" height="55"/></a>
 </p>
 
 <p align="center">
@@ -36,6 +32,9 @@
 > This is an independent open-source project and is not affiliated with, endorsed by, sponsored by, or maintained by Anthropic. Anthropic and Claude Code are referenced only to describe the toolchain this workflow uses.
 >
 > This project has **no affiliated cryptocurrency, token, or paid sponsorship program**. Anything claiming otherwise is unauthorized and should be treated as a scam. The only ways to support the project are the Ko-fi link below and contributing on GitHub.
+
+> [!NOTE]
+> This fork adds: a Claude Code **plugin** packaging layer (so the whole toolkit can be installed with `/plugin` instead of only via `git clone`), four additional portal-search skills (Greenhouse, Getro, Consider, JobLeads), and a small fix to `/reset` so it fully clears `03-writing-style.md`. Everything else is upstream, unmodified. See [`CHANGES.md`](CHANGES.md) for the full list and credit to the original author.
 
 ## Does it actually work?
 
@@ -111,6 +110,10 @@ cd ai-job-search
 > recipe is in [SETUP.md section 8](SETUP.md#8-pulling-upstream-updates-into-your-fork),
 > and every update workflow works identically. Fork only to contribute.
 
+> [!TIP]
+> **Prefer not to fork?** Install this as a Claude Code plugin instead — see
+> [Installing as a plugin](#installing-as-a-plugin) below, then skip to step 3.
+
 ### 2. Install job search tools
 
 ```bash
@@ -160,6 +163,19 @@ This runs the full workflow: evaluate fit, draft CV + cover letter, review with 
 
 > [!WARNING]
 > Postings are treated as untrusted input (the workflow follows no instructions embedded in them and fetches no links from their body), but agentic defenses are instruction-level, not a sandbox - on an unfamiliar job board, skim what was fetched and written before you hit send. Details in [SECURITY.md](SECURITY.md).
+
+### Installing as a plugin
+
+If you'd rather not fork and clone, install this as a Claude Code plugin instead. Create an empty directory for your job search, start Claude Code there, and run:
+
+```
+/plugin marketplace add lcnorder/job-search-toolkit
+/plugin install job-search-toolkit
+```
+
+Then run `/setup` as in step 3 above — on a plugin install it first detects the empty directory and offers to copy the framework's templates, tools, and portal-search skills in (no personal data, just the scaffold), then proceeds with the normal onboarding. Step 2 (installing portal CLI dependencies) still applies after that.
+
+The plugin ships the same commands and skills as the forked repo; your own `CLAUDE.md`, `cv/`, `cover_letters/`, and `documents/` live in your project directory either way, not inside the plugin.
 
 ## Commands
 

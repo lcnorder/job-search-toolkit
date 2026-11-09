@@ -6,6 +6,37 @@ There are three paths into setup. Step 0 picks the right one; all three converge
 
 ---
 
+## Step -1: Scaffold Check (plugin installs only)
+
+Check whether `cv/` exists in the current directory.
+
+**If `cv/` exists**, this is a cloned/forked copy of the repo with the full scaffold already present — skip straight to Step 0.
+
+**If `cv/` does not exist**, you may be running as an installed plugin in a fresh, otherwise-empty project directory, which has the commands and skills but none of the supporting files they expect (`cv/`, `cover_letters/`, `tools/`, `templates/`, `assets/`, `.agents/skills/`, `salary_lookup.py`, `documents/`, `CLAUDE.md`, `.gitignore`, `.claude/settings.json`). Determine which by checking the literal text `${CLAUDE_PLUGIN_ROOT}`:
+
+- If Claude Code has substituted it with an actual absolute filesystem path, you are running as a plugin. Use that path as `<plugin_root>` and continue below.
+- If it is still the literal, unsubstituted string `${CLAUDE_PLUGIN_ROOT}`, you are **not** running as a plugin — something else is wrong (wrong directory, incomplete clone). Tell the user `cv/` is missing, ask them to confirm they're in the right directory or re-clone, and stop. Do not proceed to Step 0.
+
+When running as a plugin, confirm with the user before writing anything:
+
+> This looks like a fresh install with nothing scaffolded yet. I'll copy the project's
+> templates, tools, and portal-search skills into this directory so `/apply`, `/scrape`,
+> and the rest of the commands have what they expect — nothing with your data in it,
+> just the framework files. Proceed?
+
+On confirmation, copy from `<plugin_root>` into the current directory, creating only paths that don't already exist here (never overwrite anything already present):
+
+- `tools/`, `templates/`, `assets/`, `salary_lookup.py`
+- `cv/main_example.tex`, `cover_letters/cover.cls`, `cover_letters/OpenFonts/`, `cover_letters/cover_example.tex`
+- `.agents/skills/` (every portal-search skill folder, excluding any `node_modules/` inside them — those are restored with `bun install` the first time a portal skill runs, not shipped)
+- `documents/` (the folder structure, each subfolder's `.gitkeep`, and `documents/README.md` only — never any file a previous run might have placed there)
+- `job_scraper/.gitkeep`, `upskill/.gitkeep`, `company_research/.gitkeep`
+- `CLAUDE.md`, `.gitignore`, `.claude/settings.json`
+
+Report what was created, then continue to Step 0. Mention once, briefly, that running `git init` here is optional but recommended if the user wants local version history.
+
+---
+
 ## Step 0: Welcome & Choose Path
 
 If `$ARGUMENTS` contains `--section <name>`, skip directly to that section in Path C for an update-only flow. Do not run the path-selection prompt below.

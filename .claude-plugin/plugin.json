@@ -1,0 +1,15 @@
+{
+  "name": "job-search-toolkit",
+  "displayName": "AI Job Search Toolkit",
+  "version": "0.1.0",
+  "description": "AI-powered job application framework: evaluate postings, tailor your CV and cover letters, scrape job boards, and prep for interviews. Fork of ai-job-search (MadsLorentzen / ai-job-search-dev) with plugin packaging and additional portal skills.",
+  "author": {
+    "name": "lcnorder"
+  },
+  "homepage": "https://github.com/lcnorder/job-search-toolkit",
+  "repository": "https://github.com/lcnorder/job-search-toolkit",
+  "license": "MIT",
+  "keywords": ["job-search", "career", "cv", "resume", "cover-letter", "interview-prep"],
+  "commands": ["./.claude/commands/"],
+  "skills": ["./.claude/skills/"]
+}
